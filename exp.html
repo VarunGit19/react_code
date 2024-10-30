@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>Session Management Example</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+}
+.container {
+max-width: 400px;
+margin: 0 auto;
+text-align: center;
+padding: 20px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Login</h2>
+<form id="loginForm">
+<label for="username">Username:</label>
+<input type="text" id="username" name="username" required><br><br>
+<label for="password">Password:</label>
+<input type="password" id="password" name="password" required><br><br>
+<button type="button" onclick="login()">Login</button>
+</form>
+</div>
+<div class="container" id="homepage" style="display: none;">
+<h2>Welcome to the Homepage</h2>
+<p>Click anywhere to stay logged in.</p>
+</div>
+<script>
+let timeout;
+function login() {
+const username = document.getElementById('username').value;
+const password = document.getElementById('password').value;
+// You should add authentication logic here.
+// For simplicity, we'll assume any username and password are valid.
+// Display the homepage and hide the login form
+document.getElementById('loginForm').style.display = 'none';
+document.getElementById('homepage').style.display = 'block';
+// Set a timeout to log the user out after 10 seconds of inactivity
+timeout = setTimeout(logout, 10000);
+}
+function resetTimeout() {
+// Reset the timeout whenever there's user activity
+clearTimeout(timeout);
+timeout = setTimeout(logout, 10000);
+}
+function logout() {
+// Clear the homepage and display the login form
+document.getElementById('loginForm').style.display = 'block';
+document.getElementById('homepage').style.display = 'none';
+// Clear the login details
+document.getElementById('username').value = '';
+document.getElementById('password').value = '';
+// Alert the user
+alert('Session has ended due to inactivity. Please log in again.');
+}
+// Add an event listener to detect user activity and reset the timeout
+document.getElementById('homepage').addEventListener('click', resetTimeout);
+</script>
+</body>
+</html>
